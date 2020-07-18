@@ -42,29 +42,29 @@ app.post('/estudiantes', async (req, res) => {
     res.render('estudiantes', { estudiantes });
 });
 
-//Delete
-app.post('/estudiantes/:id' ,async (req ,res) => {
-    await Estudiantes.findByIdAndDelete(req.params.id);
-    const estudiantes = await Estudiantes.find().select('nombre edad');
-    res.render('estudiantes', { estudiantes });
-}); 
 
 //Modificar
-app.put('/estudiantes/:id', async (req, res) => {
-    const { nombre, edad } = req.body;
-    await Estudiantes.findById(req.params.id).update({ nombre, edad });
-    const estudiantes = await Estudiantes.find().select('nombre edad');
-    res.render('estudiantes', { estudiantes });
+app.post('/estudiantes/:id', async (req, res) => {
+    
+    if(req.body.button_1=='Modificar'){
+        const { nombre, edad } = req.body;
+        await Estudiantes.findById(req.params.id).update({ nombre, edad });
+        const estudiantes = await Estudiantes.find().select('nombre edad');
+        res.render('estudiantes', { estudiantes });
+    }
+    else
+    {
+        await Estudiantes.findByIdAndDelete(req.params.id);
+        const estudiantes = await Estudiantes.find().select('nombre edad');
+        res.render('estudiantes', { estudiantes });
+    }
 });
 
-
+/* //Delete
+app.delete('/estudiantes/:id' ,async (req ,res) => {
     
-
-/* app.delete('/estudiantes/:id' ,async (req ,res) => {
-    await findByIdAndDelete(Estudiantes[req.params.id]);
-    const estudiantes = await Estudiantes.find().select('nombre edad');
-    res.render('estudiantes', { estudiantes });
-});  */
+}); 
+ */
 
 
 
