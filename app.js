@@ -42,12 +42,14 @@ app.post('/estudiantes', async (req, res) => {
     res.render('estudiantes', { estudiantes });
 });
 
+//Delete
 app.post('/estudiantes/:id' ,async (req ,res) => {
     await Estudiantes.findByIdAndDelete(req.params.id);
     const estudiantes = await Estudiantes.find().select('nombre edad');
     res.render('estudiantes', { estudiantes });
 }); 
 
+//Modificar
 app.put('/estudiantes/:id', async (req, res) => {
     const { nombre, edad } = req.body;
     await Estudiantes.findById(req.params.id).update({ nombre, edad });
